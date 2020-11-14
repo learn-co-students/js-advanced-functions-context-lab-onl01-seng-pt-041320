@@ -11,7 +11,7 @@
 
 // creating Employee Record Cards
 
-function createEmployeeRecord(arr){
+let createEmployeeRecord = function (arr){
     const newObj = {};
     newObj.firstName = arr[0];
     newObj.familyName = arr[1];
@@ -24,14 +24,14 @@ function createEmployeeRecord(arr){
 
 // creating Employee RecordS
 
-function createEmployeeRecords(arr) {
+let createEmployeeRecords = function (arr) {
     let result = arr.map(createEmployeeRecord);
     return result;
 };
 
 // create Time In Event
 
-function createTimeInEvent(dateStamp) {
+let createTimeInEvent = function (dateStamp) {
     const newEvent = {};
     let[date, hour] = dateStamp.split(' '); // splitting YYYY-MM-DD HHMM into date and time
 
@@ -46,7 +46,7 @@ function createTimeInEvent(dateStamp) {
 
 // create Time Out Event
 
-function createTimeOutEvent(dateStamp) {
+let createTimeOutEvent = function (dateStamp) {
     const timeOutEvent = {};
     let[date, hour] = dateStamp.split(' '); // splitting YYYY-MM-DD HHMM into date and time
 
@@ -61,31 +61,29 @@ function createTimeOutEvent(dateStamp) {
 
 // calculate hours worked on a given date
 
-function hoursWorkedOnDate(date) {
+let hoursWorkedOnDate = function(date) {
     // find time IN object that matches with provided date
     // find time OUT object that matches with provided date
     // create a variable that equals time OUT hr
     // create a variable that equals time IN hr
     // total nr hrs is time out - time in / 100
 
-    const objDateIn = this.timeInEvents.find(timeObj => timeObj.date === date);
-    const objDateOut = this.timeOutEvents.find(timeObj => timeObj.date === date);
-    const hrsOut = objDateOut.hour
-    const hrsIn = objDateIn.hour
+    let objDateIn = this.timeInEvents.find(timeObj => timeObj.date === date);
+    let objDateOut = this.timeOutEvents.find(timeObj => timeObj.date === date);
+    let hrsOut = objDateOut.hour
+    let hrsIn = objDateIn.hour
 
     return (hrsOut - hrsIn)/100;
 };
 
-function wagesEarnedOnDate(employeeRecordObj, date) {
+let wagesEarnedOnDate = function(date) {
     // find hours worked on the date using hoursWorkedOnDate function
     // get the rate from the object ✔
 
-    const payPerHour = employeeRecordObj.payPerHour;
-    const hoursWorked = hoursWorkedOnDate(employeeRecordObj, date);
+    const payPerHour = this.payPerHour;
+    const hoursWorked = hoursWorkedOnDate.call(this, date);
     return payPerHour * hoursWorked;
 }
-
-
 
 // all wages for
 
@@ -100,3 +98,20 @@ let allWagesFor = function () {
 
     return payable
 }
+
+// find employees by first name
+
+function findEmployeeByFirstName(srcArray, firstName) {
+    return srcArray.find(function(rec){
+        return rec.firstName === firstName
+      })
+};
+  
+// calculate payroll 
+
+  let calculatePayroll = function(arrayOfEmployeeRecords){
+      return arrayOfEmployeeRecords.reduce(function(memo, rec){
+          return memo + allWagesFor.call(rec)
+      }, 0)
+  }
+  
